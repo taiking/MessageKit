@@ -26,4 +26,8 @@ var avatarView = AvatarView()
 //: Everything has a default so if you dont want to set it then you dont have to.
 
 //Helper method.
+
+
+
+
 PlaygroundPage.current.liveView = avatarView

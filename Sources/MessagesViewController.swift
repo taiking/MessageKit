@@ -178,7 +178,7 @@ extension MessagesViewController: UICollectionViewDataSource {
 
             cell.avatarView.set(avatar: avatar)
             cell.messageLabel.textColor = textColor
-            cell.messageContainerView.backgroundColor = messageColor
+            cell.messageContainerView.messageContainerColor = messageColor
             cell.cellTopLabel.attributedText = topLabelText
             cell.cellBottomLabel.attributedText = bottomLabelText
 

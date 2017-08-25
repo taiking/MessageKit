@@ -28,12 +28,12 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
 
-    open var messageContainerView: UIView = {
-        let messageContainerView = UIView()
-        messageContainerView.layer.cornerRadius = 12.0
-        messageContainerView.layer.masksToBounds = true
+    open var messageContainerView: MessageContainerView = {
+        let messageContainerView = MessageContainerView()
+        messageContainerView.backgroundColor = .white
         return messageContainerView
     }()
+
 
     open var avatarView: AvatarView = AvatarView()
 
