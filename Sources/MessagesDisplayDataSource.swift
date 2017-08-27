@@ -42,6 +42,10 @@ public protocol MessagesDisplayDataSource: class, MessagesDataSource {
     
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
     
+    func cellBorderWidth(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+    
+    func cellBorderColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
+    
 }
 
 public extension MessagesDisplayDataSource {
@@ -76,6 +80,14 @@ public extension MessagesDisplayDataSource {
     
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
+    }
+    
+    func cellBorderWidth(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 0
+    }
+    
+    func cellBorderColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return UIColor.clear
     }
     
 }

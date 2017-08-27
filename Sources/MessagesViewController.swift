@@ -175,12 +175,16 @@ extension MessagesViewController: UICollectionViewDataSource {
             let avatar = displayDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
             let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
             let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
+            let borderColor = displayDataSource.cellBorderColor(for: message, at: indexPath, in: messagesCollectionView)
+            let borderWidth = displayDataSource.cellBorderWidth(for: message, at: indexPath, in: messagesCollectionView)
 
             cell.avatarView.set(avatar: avatar)
             cell.messageLabel.textColor = textColor
             cell.messageContainerView.backgroundColor = messageColor
             cell.cellTopLabel.attributedText = topLabelText
             cell.cellBottomLabel.attributedText = bottomLabelText
+            cell.messageContainerView.layer.borderColor = borderColor.cgColor
+            cell.messageContainerView.layer.borderWidth = borderWidth
 
         }
 
