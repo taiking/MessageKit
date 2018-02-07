@@ -159,6 +159,30 @@ final class MessageIntermediateLayoutAttributes {
 
     }()
     
+    // Cell Side Label
+    var sideLabelAlignment: LabelAlignment = .cellTrailing(.zero)
+    var sideLabelSize: CGSize = .zero
+    
+    lazy var sideLabelFrame: CGRect = {
+        
+        guard sideLabelSize != .zero else { return .zero }
+        
+        var origin: CGPoint = .zero
+        
+        origin.y = messageContainerFrame.maxY - sideLabelPadding.bottom - sideLabelSize.height
+        
+        switch sideLabelAlignment {
+        case .messageLeading:
+            origin.x = messageContainerFrame.minX - sideLabelSize.width - sideLabelPadding.right
+        case .messageTrailing:
+            origin.x = messageContainerFrame.maxX + sideLabelPadding.left
+        default:
+            origin.x = 0
+        }
+        return CGRect(origin: origin, size: sideLabelSize)
+        
+    }()
+    
     // MARK: - Initializer
     
     init(message: MessageType, indexPath: IndexPath) {
@@ -211,5 +235,8 @@ extension MessageIntermediateLayoutAttributes {
     var messageHorizontalPadding: CGFloat {
         return messageContainerPadding.left + messageContainerPadding.right
     }
-
+    
+    var sideLabelPadding: UIEdgeInsets {
+        return sideLabelAlignment.insets
+    }
 }

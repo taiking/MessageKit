@@ -83,6 +83,20 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///
     /// All other senders: .messageTrailing(.zero)
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
+    
+    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s side label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is determined by the messages `Sender`:
+    ///
+    /// Current Sender: .messageLeading(.zero)
+    ///
+    /// All other senders: .messageTrailing(.zero)
+    func cellSideLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
 
     /// Specifies the size of the `AvatarView` in a `MessageCollectionViewCell`.
     ///
@@ -207,6 +221,11 @@ public extension MessagesLayoutDelegate {
     }
 
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter(.zero) }
+        return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
+    }
+    
+    func cellSideLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter(.zero) }
         return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
     }

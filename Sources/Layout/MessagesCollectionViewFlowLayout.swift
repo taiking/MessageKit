@@ -248,6 +248,10 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.bottomLabelMaxWidth = cellBottomLabelMaxWidth(for: attributes)
         attributes.bottomLabelSize = cellBottomLabelSize(for: attributes)
         
+        // Cell Side Label
+        attributes.sideLabelSize = cellSideLabelSize(for: attributes)
+        attributes.sideLabelAlignment = cellSideLabelAlignment(for: attributes)
+        
         // Cell Top Label
         attributes.topLabelAlignment = cellTopLabelAlignment(for: attributes)
         attributes.topLabelMaxWidth = cellTopLabelMaxWidth(for: attributes)
@@ -273,6 +277,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.messageContainerFrame = intermediateAttributes.messageContainerFrame
         attributes.topLabelFrame = intermediateAttributes.topLabelFrame
         attributes.bottomLabelFrame = intermediateAttributes.bottomLabelFrame
+        attributes.sideLabelFrame = intermediateAttributes.sideLabelFrame
         attributes.avatarFrame = intermediateAttributes.avatarFrame
         attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
         
@@ -595,11 +600,39 @@ private extension MessagesCollectionViewFlowLayout {
     
 }
 
+// MARK: - Cell Side Label Calculations [ O - P ]
+private extension MessagesCollectionViewFlowLayout {
+    
+    /// O
+    
+    /// Returns the alignment of the cell's side label.
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
+    func cellSideLabelAlignment(for attributes: MessageIntermediateLayoutAttributes) -> LabelAlignment {
+        return messagesLayoutDelegate.cellSideLabelAlignment(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
+    }
+    
+    // P
+    
+    /// Returns the size of the cell's side label considering the specified layout information.
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating label's size.
+    func cellSideLabelSize(for attributes: MessageIntermediateLayoutAttributes) -> CGSize {
+        
+        let text = messagesDataSource.cellSideLabelAttributedText(for: attributes.message, at: attributes.indexPath)
+        
+        guard let sideLabelText = text else { return .zero }
+        return labelSize(for: sideLabelText, considering: 100)
+    }
+}
+
 // MARK: - Cell Sizing
 
 private extension MessagesCollectionViewFlowLayout {
     
-    // P
+    // Q
     
     /// The height of a `MessageCollectionViewCell`.
     ///

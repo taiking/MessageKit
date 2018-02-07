@@ -56,6 +56,13 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
         label.numberOfLines = 0
         return label
     }()
+    
+    open var cellSideLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
 
     open weak var delegate: MessageCellDelegate?
 
@@ -82,6 +89,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
         messageContainerView.addSubview(messageContentView)
         contentView.addSubview(avatarView)
         contentView.addSubview(cellBottomLabel)
+        contentView.addSubview(cellSideLabel)
     }
 
     open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -95,7 +103,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
         messageContentView.frame = messageContainerView.bounds
         cellTopLabel.frame = attributes.topLabelFrame
         cellBottomLabel.frame = attributes.bottomLabelFrame
-
+        cellSideLabel.frame = attributes.sideLabelFrame
     }
 
     open override func prepareForReuse() {
@@ -103,6 +111,8 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
         cellTopLabel.attributedText = nil
         cellBottomLabel.text = nil
         cellBottomLabel.attributedText = nil
+        cellSideLabel.text = nil
+        cellSideLabel.attributedText = nil
     }
 
     open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -128,10 +138,12 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
             let avatar = dataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
             let topLabelText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
             let bottomLabelText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
-
+            let sideText = dataSource.cellSideLabelAttributedText(for: message, at: indexPath)
+            
             avatarView.set(avatar: avatar)
             cellTopLabel.attributedText = topLabelText
             cellBottomLabel.attributedText = bottomLabelText
+            cellSideLabel.attributedText = sideText
         }
 
     }
